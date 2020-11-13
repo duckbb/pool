@@ -22,7 +22,7 @@ func NewPool(number int, option ...interface{}) (*Pool, error) {
 		for i := 0; i < number; i++ {
 			m <- ret()
 		}
-	} else if reflect.TypeOf(option[0]).Kind() == reflect.Struct {
+	} else if temp := reflect.TypeOf(option[0]).Kind(); temp == reflect.Struct || temp == reflect.Ptr {
 		temp := option[0]
 		for i := 0; i < number; i++ {
 			m <- temp
@@ -32,20 +32,6 @@ func NewPool(number int, option ...interface{}) (*Pool, error) {
 	}
 	return &Pool{objs: m}, nil
 }
-
-//func NewPoolFunc(number int, f func() interface{}) (*Pool, error) {
-//	if number < 0 {
-//		return nil, errors.New("number must greater than 0")
-//	}
-//	m := make(chan interface{}, number)
-//	for i := 0; i < number; i++ {
-//		m <- f()
-//	}
-//	return &Pool{objs: m}, nil
-//}
-//func NewPoolStruct(number int,interface{}){
-//
-//}
 
 func (p *Pool) Add(obj interface{}) error {
 	select {
