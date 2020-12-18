@@ -1,8 +1,8 @@
-#comon object pool 
+# comon object pool 
 
-##1.install
+## 1.install
 go get -u github.com/duckbb/pool
-##2.create pool demo
+## 2.create pool demo
 
 ````
 type Persion struct {
